@@ -17,6 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   sensor_msgs
   inekf_msgs
+  geometry_msgs
   #apriltag_msgs
   tf
 )
@@ -180,6 +181,14 @@ target_link_libraries(kinematics_publisher_node
     ${Boost_LIBRARIES}
     cheetah_kinematics
 )
+
+add_executable(path_publisher_node src/path_publisher_node.cpp )
+target_link_libraries(path_publisher_node
+    ${catkin_LIBRARIES}
+    ${inekf_LIBRARIES}
+    ${Boost_LIBRARIES}
+)
+
 
 add_executable(lcm_publisher_node src/lcm_publisher_node.cpp )
 target_link_libraries(lcm_publisher_node
