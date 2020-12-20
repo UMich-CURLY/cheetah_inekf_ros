@@ -1,14 +1,14 @@
 settings:
   static_bias_initialization: false
   initialize_state_from_first_observation: true
-  imu_topic: "/cheetah/imu"
+  imu_topic: "/Imu"
   map_frame_id : "/odom"
   base_frame_id: "/cheetah/body"
   pose_topic: "/cheetah/pose"
   state_topic: "/cheetah/inekf_state"
   publish_visualization_markers: false
   visualization_markers_topic: "/cheetah/markers"
-  enable_kinematics: true
+  enable_kinematics: false
   flat_ground: false
   kinematics_topic: "/cheetah/kinematics"
   contact_topic: "/cheetah/contacts"

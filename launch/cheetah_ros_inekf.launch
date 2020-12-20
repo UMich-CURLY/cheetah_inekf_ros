@@ -2,14 +2,14 @@
   <arg name="cheetah_namespace" default="cheetah" />
   <param name="use_sim_time" value="true" />
 
-  <arg name="bagfile"                  default="/home/rayzhang/data/mair.bag" />  
+  <arg name="bagfile"                  default="/home/rayzhang/data/forrest1.bag" />  
   <arg name="start_time" 		 default="0" /> 
   
   <!-- Run cheetah kinematics publisher -->
-  <node name="kinematics_publisher_node" pkg="cheetah_inekf_ros" type="kinematic_publisher_node">
-    <param name="joint_state_topic" value="joint_states"/>
-    <param name="kinematics_topic" value="kinematics"/>
-    <param name="imu_frame_id" value="imu">
+  <node name="kinematics_publisher_node" pkg="cheetah_inekf_ros" type="kinematics_publisher_node">
+    <param name="joint_state_topic" value="/JointState"/>
+    <param name="kinematics_topic" value="/cheetah/kinematics"/>
+    <param name="imu_frame_id" value="imu" />
       <param name="encoder_std" value="0.0174533"/>
       <param name="kinematic_prior_orientation_std" value="0.03"/>
       <param name="kinematic_prior_position_std" value="0.03"/>
