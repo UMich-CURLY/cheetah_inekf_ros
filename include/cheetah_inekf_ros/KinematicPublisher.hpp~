@@ -1,4 +1,0 @@
-#include <ros/ros.h>
-#include <string>
-#include "inekf_msgs/KinematicsArray.h"
-#include "sensor_msgs/JointState.h"
