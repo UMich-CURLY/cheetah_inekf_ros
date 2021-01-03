@@ -4,8 +4,8 @@ namespace cheetah_inekf_ros {
   template <unsigned int ENCODER_DIM>
   void InEKF_lcm<ENCODER_DIM>::imu_lcm_callback(const lcm::ReceiveBuffer* rbuf,
                                    const std::string& channel_name,
-                                   const microstrain_lcmt* msg) {
-  
+                                   const imu_t* msg) {
+    ROS_DEBUG_STREAM("Receive new imu msg");
     seq_imu_data_++;
 
     sensor_msgs::Imu imu_msg;
@@ -28,16 +28,17 @@ namespace cheetah_inekf_ros {
   template <unsigned int ENCODER_DIM>
   void InEKF_lcm<ENCODER_DIM>::joint_state_lcm_callback(const lcm::ReceiveBuffer* rbuf,
                                            const std::string& channel_name,
-                                           const leg_control_data_lcmt* msg) {
+                                           const legcontrol_t* msg) {
+    ROS_DEBUG_STREAM("Receive new joint_state msg");    
     seq_joint_state_++;
 
     sensor_msgs::JointState joint_state_msg;
     joint_state_msg.header.seq = seq_joint_state_;
     joint_state_msg.header.stamp = ros::Time::now();
     joint_state_msg.header.frame_id = "/cheetah/joint_state";
-    std::vector<double> joint_position(msg->q, msg->q + sizeof(msg->q)/sizeof(msg->q[0]));
-    std::vector<double> joint_velocity(msg->qd, msg->qd + sizeof(msg->qd)/sizeof(msg->qd[0]));
-    std::vector<double> joint_effort(msg->tau_est, msg->tau_est + sizeof(msg->tau_est)/sizeof(msg->tau_est[0]));
+    std::vector<double> joint_position(msg->q.begin(), msg->q.end() );
+    std::vector<double> joint_velocity(msg->qd.begin(), msg->qd.end() );
+    std::vector<double> joint_effort(msg->tau_est.begin(), msg->tau_est.end() );
     Eigen::Matrix<double, ENCODER_DIM, 1> encoder_pos;
     for (int j = 0; j < ENCODER_DIM; j++)
       encoder_pos(j) = joint_position[j];
@@ -58,7 +59,8 @@ namespace cheetah_inekf_ros {
   template <unsigned int ENCODER_DIM>
   void InEKF_lcm<ENCODER_DIM>::contact_lcm_callback(const lcm::ReceiveBuffer* rbuf,
                                        const std::string& channel_name,
-                                       const wbc_test_data_t* msg) {
+                                       const contact_t* msg) {
+    ROS_DEBUG_STREAM("Receive new contact msg");        
     seq_contact_++;
 
     inekf_msgs::ContactArray contact_msg;
@@ -72,7 +74,7 @@ namespace cheetah_inekf_ros {
     {
       inekf_msgs::Contact ct;
       ct.id = i;
-      ct.indicator =  msg->contact_est[i] > 0;
+      ct.indicator =  msg->contact[i] > 0;
       contacts.push_back(ct);
     }
     contact_msg.contacts = contacts;

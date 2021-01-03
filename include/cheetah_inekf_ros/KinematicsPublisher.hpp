@@ -74,7 +74,7 @@ namespace cheetah_inekf_ros {
       Eigen::Matrix<double,6,6> cov_HL = J_HL * cov_encoder * J_HL.transpose() + cov_prior;
       Eigen::Matrix<double,6,6> cov_HR = J_HR * cov_encoder * J_HR.transpose() + cov_prior;
       
-      front_left_foot.id = 2;
+      front_left_foot.id = 1;
       front_left_foot.pose.pose.orientation.w = q_FL.w();
       front_left_foot.pose.pose.orientation.x = q_FL.x();
       front_left_foot.pose.pose.orientation.y = q_FL.y();
@@ -87,7 +87,7 @@ namespace cheetah_inekf_ros {
           front_left_foot.pose.covariance[i*6+j] = cov_FL(i,j);
         }
       }
-      front_right_foot.id = 1;
+      front_right_foot.id = 0;
       front_right_foot.pose.pose.orientation.w = q_FR.w();
       front_right_foot.pose.pose.orientation.x = q_FR.x();
       front_right_foot.pose.pose.orientation.y = q_FR.y();
@@ -101,7 +101,7 @@ namespace cheetah_inekf_ros {
         }
       }
 
-      hind_left_foot.id = 4;
+      hind_left_foot.id = 3;
       hind_left_foot.pose.pose.orientation.w = q_HL.w();
       hind_left_foot.pose.pose.orientation.x = q_HL.x();
       hind_left_foot.pose.pose.orientation.y = q_HL.y();
@@ -116,7 +116,7 @@ namespace cheetah_inekf_ros {
       }
 
 
-      hind_right_foot.id = 3;
+      hind_right_foot.id = 2;
       hind_right_foot.pose.pose.orientation.w = q_HR.w();
       hind_right_foot.pose.pose.orientation.x = q_HR.x();
       hind_right_foot.pose.pose.orientation.y = q_HR.y();

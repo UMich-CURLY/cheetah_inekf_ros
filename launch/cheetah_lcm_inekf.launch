@@ -1,14 +1,14 @@
 
 <launch>
 	<!-- Input Arguments -->
-	<arg name="cassie_namespace" 		default="cassie" />
+	<arg name="cheetah_namespace" 		default="cheetah" />
     <!-- Use simulation time -->
-    <param name="use_sim_time" value="true" />
 
-    <node name="lcm_publisher_node" pkg="cheetah_inekf_ros" type="lcn_publisher_node">
+
+    <node name="lcm_publisher_node" pkg="cheetah_inekf_ros" type="lcm_publisher_node" >
         <param name="joint_state_lcm_topic" value="joint_states"/>
         <param name="contact_topic" value="contact"/>
-        <param name="imu_lcm_topic" value="imu">
+        <param name="imu_lcm_topic" value="imu"/>
         <param name="encoder_std" value="0.0174533"/>
         <param name="kinematic_prior_orientation_std" value="0.03"/>
         <param name="kinematic_prior_position_std" value="0.03"/>
@@ -19,15 +19,16 @@
         <rosparam file="$(find cheetah_inekf_ros)/config/inekf/settings.yaml" command="load" />
         <rosparam file="$(find cheetah_inekf_ros)/config/inekf/noise.yaml" command="load" />
         <rosparam file="$(find cheetah_inekf_ros)/config/inekf/prior.yaml" command="load" />
-    </node>
+    </node> 
 
     <!-- Run odom path publisher -->
-    <node name="path_publisher" pkg="cheetah_inekf_ros" type="path_publisher_node">
+
+<node name="path_publisher" pkg="cheetah_inekf_ros" type="path_publisher_node">
         <param name="pose_topic" value="/cheetah/pose"/>
         <param name="path_topic" value="/cheetah/path"/>
         <param name="publish_rate" value="1"/>
         <param name="pose_skip" value="100"/>
-    </node>
+    </node> 
 
 
 
