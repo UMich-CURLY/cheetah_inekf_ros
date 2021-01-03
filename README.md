@@ -11,5 +11,5 @@ Boost
 ```
 
 ## Launch files to start with
-* Directly read lcm logs: `launch/cheetah_lcm_inekf.launch`
-* Read ros bags: `launch/cheetah_ros_inekf.launch`
+* Main InEKF: `launch/cheetah_lcm_inekf.launch`
+* Play LCM log: `lcm-logplayer data/08292020_trial1.log`
