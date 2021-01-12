@@ -7,6 +7,7 @@
 #include <queue>
 #include <mutex>
 #include <thread>
+#include <Eigen/Dense>
 #include "geometry_msgs/PoseWithCovarianceStamped.h"
 #include <nav_msgs/Path.h>
 
@@ -15,19 +16,20 @@ class PosePublisherNode{
         PosePublisherNode(ros::NodeHandle n) : n_(n) {
             // Create private node handle
             ros::NodeHandle nh("~");
-            std::string pose_csv_file;
+            std::string pose_csv_file, init_rot_file;
             std::string pose_topic, pose_frame;
 
             nh.param<std::string>("pose_topic", pose_topic, "/cheetah/groundtruth/pose");
             nh.param<std::string>("pose_frame", pose_frame, "/odom");
             nh.param<std::string>("pose_csv_file", pose_csv_file, "/data/ground_truth.csv");
+            nh.param<std::string>("init_rot_file", init_rot_file, "/data/init_rot_file.csv");
             nh.param<double>("publish_rate", publish_rate_, 1); 
             nh.param<int>("pose_skip", pose_skip_, 1); 
             
             // load poses from csv files
 
             std::cout<<"reading poses from csv"<<std::endl;
-            pose_from_csv_ = readPoseFromCSV(pose_csv_file);
+            pose_from_csv_ = readPoseFromCSV(pose_csv_file,init_rot_file);
             first_pose_ = pose_from_csv_.front();
             std::cout<<"done reading, it contains: "<<pose_from_csv_.size()<<" of poses."<<std::endl;
             std::cout<<"first pose is: "<<first_pose_[0]<<", "<<first_pose_[1]<<", "<<first_pose_[2]<<std::endl;
@@ -60,8 +62,21 @@ class PosePublisherNode{
             poses_.push_back(pose);
         }
 
-        std::queue<std::array<float,3>> readPoseFromCSV(std::string pose_csv_file){
-            
+        std::queue<std::array<float,3>> readPoseFromCSV(std::string pose_csv_file,std::string init_rot_file){
+            Eigen::Matrix3f init_rot;
+            std::string temp_rot;
+            std::ifstream init_file(init_rot_file);
+            if(init_file.is_open()){
+                for(int i=0; i<3; ++i){
+                    for(int j=0; j<3; ++j){
+                        std::getline(init_file,temp_rot,',');
+                        init_rot(i,j) = std::stof(temp_rot);
+                    }
+                }
+            }
+            init_file.close();
+
+            std::cout<<"loaded init tf: "<<init_rot<<std::endl;
             std::ifstream csv_file(pose_csv_file);
             std::queue<std::array<float,3>> pose_output;
 
@@ -71,14 +86,20 @@ class PosePublisherNode{
                 while(std::getline(csv_file, line))
                 {
                     std::stringstream ss(line);
-                    std::array<float,3> temp_pose;
+                    Eigen::Vector3f temp_pose;
+                    std::array<float,3> temp_pose_after_tf;
                     int i = 0;
                     std::string temp_str;
                     while(std::getline(ss, temp_str, ',')){
                         temp_pose[i] = std::stof(temp_str);
                         i++;
                     }
-                    pose_output.push(temp_pose);
+                    temp_pose = init_rot * temp_pose;
+                    for(int j=0; j<3; j++){
+                        temp_pose_after_tf[j] = temp_pose[j];
+                    }
+                    
+                    pose_output.push(temp_pose_after_tf);
                 }
                 csv_file.close();
             }

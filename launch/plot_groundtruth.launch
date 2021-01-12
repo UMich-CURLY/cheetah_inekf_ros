@@ -4,14 +4,15 @@
       <param name="pose_topic" value="/cheetah/groundtruth/pose"/>
       <param name="pose_frame" value="/odom"/>
       <param name="pose_csv_file" value="/media/curly_ssd_justin/code/minicheetah-perception/catkin_ws/src/cheetah_inekf_ros/data/08292020_trial1_groundtruth.csv"/>
-      <param name="publish_rate" value="10"/>
+      <param name="init_rot_file" value="/media/curly_ssd_justin/code/minicheetah-perception/catkin_ws/src/cheetah_inekf_ros/data/08292020_trial1_init_rot.txt"/>
+      <param name="publish_rate" value="100"/>
       <param name="pose_skip" value="0"/>
     </node>
 
     <node name="ground_truth_path_publisher" pkg="cheetah_inekf_ros" type="path_publisher_node" output="screen">
       <param name="pose_topic" value="/cheetah/groundtruth/pose"/>
       <param name="path_topic" value="/cheetah/groundtruth/path"/>
-      <param name="publish_rate" value="10"/>
+      <param name="publish_rate" value="100"/>
       <param name="pose_skip" value="0"/>
     </node>
 </launch>

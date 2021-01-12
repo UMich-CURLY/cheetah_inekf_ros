@@ -1,6 +1,6 @@
 settings:
   static_bias_initialization: false
-  initialize_state_from_first_observation: true
+  initialize_state_from_first_observation: false
   imu_topic: "/lcm_publisher_node/imu"
   map_frame_id : "/odom"
   base_frame_id: "/cheetah/imu"
