@@ -4,7 +4,7 @@ settings:
   imu_topic: "/lcm_publisher_node/imu"
   map_frame_id : "/odom"
   base_frame_id: "/cheetah/imu"
-  pose_topic: "/cheeta/pose"
+  pose_topic: "/cheetah/pose"
   state_topic: "/cheetah/inekf_state"
   publish_visualization_markers: true
   visualization_markers_topic: "/cheetah/markers"

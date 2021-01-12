@@ -189,6 +189,12 @@ target_link_libraries(path_publisher_node
     ${Boost_LIBRARIES}
 )
 
+add_executable(pose_publisher_node src/pose_publisher_node.cpp )
+target_link_libraries(pose_publisher_node
+    ${catkin_LIBRARIES}
+    ${inekf_LIBRARIES}
+    ${Boost_LIBRARIES}
+)
 
 add_executable(lcm_publisher_node src/lcm_publisher_node.cpp )
 target_link_libraries(lcm_publisher_node

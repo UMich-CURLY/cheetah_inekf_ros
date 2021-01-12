@@ -55,10 +55,11 @@ class PathPublisherNode {
 
         // Pose message callback
         void poseCallback(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr& msg){
-            if ((int)msg->header.seq%pose_skip_!=0) { return; }
+            // if ((int)msg->header.seq%pose_skip_!=0) { return; }
             geometry_msgs::PoseStamped pose;
             pose.header = msg->header;
             pose.pose = msg->pose.pose;
+            std::cout<<"publishing: "<<pose.pose.position.x<<", "<<pose.pose.position.y<<", "<<pose.pose.position.z<<std::endl;
             std::lock_guard<std::mutex> lock(poses_mutex_);
             poses_.push_back(pose);
         }
@@ -71,6 +72,7 @@ class PathPublisherNode {
             path_msg.header.stamp = ros::Time::now();
             path_msg.header.frame_id = pose_frame_;
             path_msg.poses = poses_;
+            // std::cout<<"current pose: "<<path_msg.poses.back().pose.position.x<<", "<<path_msg.poses.back().pose.position.y<<", "<<path_msg.poses.back().pose.position.z<<std::endl;
             path_pub_.publish(path_msg);
             seq_++;
         }

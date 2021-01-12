@@ -2,7 +2,7 @@
   <arg name="cheetah_namespace" default="cheetah" />
   <param name="use_sim_time" value="true" />
 
-  <arg name="bagfile"                  default="/home/rayzhang/data/forrest1.bag" />  
+  <arg name="bagfile"  default="/home/rayzhang/data/forrest1.bag" />  
   <arg name="start_time" 		 default="0" /> 
   
   <!-- Run cheetah kinematics publisher -->
@@ -22,14 +22,14 @@
       <rosparam file="$(find cheetah_inekf_ros)/config/inekf/prior.yaml" command="load" />
     </node>
 
-    <node name="path_publisher" pkg="cheetah_inekf_ros" type="path_publisher_node">
+    <node name="path_publisher" pkg="cheetah_inekf_ros" type="path_publisher_node" >
       <param name="pose_topic" value="/cheetah/pose"/>
       <param name="path_topic" value="/cheetah/path"/>
       <param name="publish_rate" value="1"/>
       <param name="pose_skip" value="100"/>
     </node>
 
-    
+
    <!-- Play Bagfile -->
     <node pkg="rosbag" type="play" name="player" output="screen" args="-q -r 1 -s $(arg start_time) -l --clock $(arg bagfile)">
     </node>
