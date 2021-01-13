@@ -64,6 +64,17 @@ class PathPublisherNode {
             poses_.push_back(pose);
         }
 
+  void poseStampedCallback(const geometry_msgs::PoseStamped::ConstPtr& msg){
+            // if ((int)msg->header.seq%pose_skip_!=0) { return; }
+            geometry_msgs::PoseStamped pose;
+            pose.header = msg->header;
+            pose.pose = msg->pose;
+            std::cout<<"publishing: "<<pose.pose.position.x<<", "<<pose.pose.position.y<<", "<<pose.pose.position.z<<std::endl;
+            std::lock_guard<std::mutex> lock(poses_mutex_);
+            poses_.push_back(pose);
+        }
+
+
         // Publishes path
         void pathPublish() {
             std::lock_guard<std::mutex> lock(poses_mutex_);

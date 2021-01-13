@@ -138,7 +138,7 @@ endif (LCM_FOUND)
 catkin_package(
    INCLUDE_DIRS include
 #  LIBRARIES invariant-ekf-ros
-   CATKIN_DEPENDS std_msgs sensor_msgs inekf_msgs tf
+   CATKIN_DEPENDS std_msgs sensor_msgs inekf_msgs tf geometry_msgs
 #  DEPENDS system_lib
 )
 
@@ -204,6 +204,17 @@ target_link_libraries(lcm_publisher_node
     cheetah_kinematics
     cheetah_lcm
 )
+
+
+add_executable(sim_publisher_node src/sim_publisher_node.cpp )
+target_link_libraries(sim_publisher_node
+    ${catkin_LIBRARIES}
+    ${inekf_LIBRARIES}
+    ${Boost_LIBRARIES}
+    cheetah_kinematics
+    cheetah_lcm
+)
+
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
