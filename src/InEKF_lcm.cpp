@@ -61,7 +61,7 @@ namespace cheetah_inekf_ros {
   void InEKF_lcm<ENCODER_DIM>::imu_lcm_callback(const lcm::ReceiveBuffer* rbuf,
                                                 const std::string& channel_name,
                                                 const microstrain_lcmt* msg) {
-    ROS_DEBUG_STREAM("Receive new imu msg");
+    ROS_DEBUG_STREAM("Receive new microstrain msg");
     seq_imu_data_++;
 
     sensor_msgs::Imu imu_msg;
@@ -85,7 +85,7 @@ namespace cheetah_inekf_ros {
   void InEKF_lcm<ENCODER_DIM>::joint_state_lcm_callback(const lcm::ReceiveBuffer* rbuf,
                                                         const std::string& channel_name,
                                                         const leg_control_data_lcmt* msg) {
-    ROS_DEBUG_STREAM("Receive new joint_state msg");    
+    ROS_DEBUG_STREAM("Receive new lcm joint_state msg");    
     seq_joint_state_++;
 
     sensor_msgs::JointState joint_state_msg;

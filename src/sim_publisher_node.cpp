@@ -5,7 +5,7 @@
 #include "ros/console.h"
 #include <lcm/lcm-cpp.hpp>
 int main(int argc, char **argv) {
-  ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Debug);
+  ros::console::set_logger_level(ROSCONSOLE_DEFAULT_NAME, ros::console::levels::Warn);
   ROS_DEBUG_STREAM("start new lcm to ros node...");
 
   lcm::LCM lcm;
@@ -24,7 +24,7 @@ int main(int argc, char **argv) {
   
   lcm.subscribe("microstrain", &cheetah_inekf_ros::InEKF_lcm<12>::imu_lcm_callback, &sim_lcm_publisher_node);
   lcm.subscribe("leg_control_data", &cheetah_inekf_ros::InEKF_lcm<12>::joint_state_lcm_callback, &sim_lcm_publisher_node);
-  lcm.subscribe("ground_truth", &cheetah_inekf_ros::InEKF_lcm<12>::simulator_lcm_callback, &sim_lcm_publisher_node);
+  lcm.subscribe("simulator_state", &cheetah_inekf_ros::InEKF_lcm<12>::simulator_lcm_callback, &sim_lcm_publisher_node);
     
   ROS_DEBUG_STREAM("start spinning...");  
   while( ( lcm.handle() == 0 ) && (ros::ok()) ) //

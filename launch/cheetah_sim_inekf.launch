@@ -1,14 +1,13 @@
 <launch>
   <arg name="cheetah_namespace" default="cheetah" />
-  <param name="use_sim_time" value="true" />
 
 
   <node name="sim_publisher_node" pkg="cheetah_inekf_ros" type="sim_publisher_node" >
     <param name="is_listening_sim" value="true" />
-        <param name="joint_state_lcm_topic" value="joint_states"/>
-        <param name="sim_lcm_topic" value="simulator"/>
-        <param name="imu_lcm_topic" value="imu"/>
-        <param name="sim_contact_force_threshold" value="18"/>
+        <param name="joint_state_lcm_topic" value="leg_control_data"/>
+        <param name="sim_lcm_topic" value="simulator_state"/>
+        <param name="imu_lcm_topic" value="microstrain"/>
+        <param name="sim_contact_force_threshold" value="20.0"/>
         <param name="encoder_std" value="0.0174533"/>
         <param name="kinematic_prior_orientation_std" value="0.03"/>
         <param name="kinematic_prior_position_std" value="0.03"/>
@@ -30,7 +29,7 @@
       <param name="pose_skip" value="100"/>
     </node>
 
-    <node name="path_publisher" pkg="cheetah_inekf_ros" type="path_publisher_node" >
+    <node name="path_publisher_sim" pkg="cheetah_inekf_ros" type="path_publisher_node" >
       <param name="pose_topic" value="/sim_publisher_node/sim_pose"/>
       <param name="path_topic" value="/cheetah/path"/>
       <param name="publish_rate" value="1"/>

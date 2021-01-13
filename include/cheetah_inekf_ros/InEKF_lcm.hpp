@@ -35,8 +35,8 @@ class InEKF_lcm {
       nh_.param<std::string>("contact_lcm_topic", contact_lcm_topic, "contact_lcm");
       nh_.param<std::string>("imu_lcm_topic", imu_lcm_topic, "imu_lcm");
 
-      nh_.param<bool>("is_listening_sim", is_listening_sim_, false);
-      nh_.param<std::string>("sim_lcm_topic", sim_lcm_topic, "simulator");
+      nh_.param<bool>("is_listening_sim", is_listening_sim_, true);
+      nh_.param<std::string>("sim_lcm_topic", sim_lcm_topic, "simulator_state");
       nh_.param<double>("sim_contact_force_threshold", sim_contact_force_threshold_, 17.5);
       // subscribe to lcm TODO
 
@@ -45,6 +45,7 @@ class InEKF_lcm {
       kinematics_publisher_ = nh_.advertise<inekf_msgs::KinematicsArray>("kinematics", 100);
 
       if (is_listening_sim_) {
+        ROS_DEBUG("INEKF_LCM is listening simulator's lcm msg");
         sim_contact_publisher_ = nh_.advertise<inekf_msgs::ContactArray>("sim_contact", 20);
         sim_pose_publisher_ = nh_.advertise<geometry_msgs::PoseStamped>("sim_pose", 50);
       } else

@@ -3,7 +3,7 @@ project(cheetah_inekf_ros)
 add_compile_options(-std=c++11)
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
-# add_compile_options(-O3)
+add_compile_options(-O3)
 # add_compile_options(-DEIGEN_NO_DEBUG)
 # add_compile_options(-march=native)
 #set(CMAKE_CXX_STANDARD 11)
