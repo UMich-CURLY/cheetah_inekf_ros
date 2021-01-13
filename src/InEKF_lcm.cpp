@@ -6,7 +6,7 @@ namespace cheetah_inekf_ros {
   void InEKF_lcm<ENCODER_DIM>::imu_lcm_callback2(const lcm::ReceiveBuffer* rbuf,
                                    const std::string& channel_name,
                                    const imu_t* msg) {
-    ROS_DEBUG_STREAM("Receive new imu msg");
+    // ROS_DEBUG_STREAM("Receive new imu msg");
     seq_imu_data_++;
 
     sensor_msgs::Imu imu_msg;
@@ -30,7 +30,7 @@ namespace cheetah_inekf_ros {
   void InEKF_lcm<ENCODER_DIM>::joint_state_lcm_callback2(const lcm::ReceiveBuffer* rbuf,
                                                         const std::string& channel_name,
                                                         const legcontrol_t* msg) {
-    ROS_DEBUG_STREAM("Receive new joint_state msg");    
+    // ROS_DEBUG_STREAM("Receive new joint_state msg");    
     seq_joint_state_++;
 
     sensor_msgs::JointState joint_state_msg;
@@ -61,7 +61,7 @@ namespace cheetah_inekf_ros {
   void InEKF_lcm<ENCODER_DIM>::imu_lcm_callback(const lcm::ReceiveBuffer* rbuf,
                                                 const std::string& channel_name,
                                                 const microstrain_lcmt* msg) {
-    ROS_DEBUG_STREAM("Receive new microstrain msg");
+    // ROS_DEBUG_STREAM("Receive new microstrain msg");
     seq_imu_data_++;
 
     sensor_msgs::Imu imu_msg;
@@ -85,7 +85,7 @@ namespace cheetah_inekf_ros {
   void InEKF_lcm<ENCODER_DIM>::joint_state_lcm_callback(const lcm::ReceiveBuffer* rbuf,
                                                         const std::string& channel_name,
                                                         const leg_control_data_lcmt* msg) {
-    ROS_DEBUG_STREAM("Receive new lcm joint_state msg");    
+    // ROS_DEBUG_STREAM("Receive new lcm joint_state msg");    
     seq_joint_state_++;
 
     sensor_msgs::JointState joint_state_msg;
@@ -121,7 +121,7 @@ namespace cheetah_inekf_ros {
   void InEKF_lcm<ENCODER_DIM>::contact_lcm_callback(const lcm::ReceiveBuffer* rbuf,
                                        const std::string& channel_name,
                                        const contact_t* msg) {
-    ROS_DEBUG_STREAM("Receive new contact msg");        
+    // ROS_DEBUG_STREAM("Receive new contact msg");        
     seq_contact_++;
 
     inekf_msgs::ContactArray contact_msg;
@@ -146,7 +146,7 @@ namespace cheetah_inekf_ros {
   void InEKF_lcm<ENCODER_DIM>::simulator_lcm_callback(const lcm::ReceiveBuffer* rbuf,
                                                       const std::string& channel_name,
                                                       const simulator_lcmt* msg) {
-    ROS_DEBUG_STREAM("Receive new simulator msg");        
+    // ROS_DEBUG_STREAM("Receive new simulator msg");        
     seq_sim_++;
 
     inekf_msgs::ContactArray contact_msg;
@@ -163,17 +163,17 @@ namespace cheetah_inekf_ros {
     }
     contact_msg.contacts = contacts;
 
-    geometry_msgs::PoseStamped sim_pose_msg;
+    geometry_msgs::PoseWithCovarianceStamped sim_pose_msg;
     sim_pose_msg.header.seq = seq_sim_;
     sim_pose_msg.header.stamp = ros::Time::now();
     sim_pose_msg.header.frame_id = "/cheetah/imu";
-    sim_pose_msg.pose.position.x = msg->p[0];
-    sim_pose_msg.pose.position.y = msg->p[1];
-    sim_pose_msg.pose.position.z = msg->p[2];
-    sim_pose_msg.pose.orientation.w = msg->quat[0];
-    sim_pose_msg.pose.orientation.x = msg->quat[1];
-    sim_pose_msg.pose.orientation.y = msg->quat[2];
-    sim_pose_msg.pose.orientation.z = msg->quat[3];
+    sim_pose_msg.pose.pose.position.x = msg->p[0];
+    sim_pose_msg.pose.pose.position.y = msg->p[1];
+    sim_pose_msg.pose.pose.position.z = msg->p[2];
+    sim_pose_msg.pose.pose.orientation.w = msg->quat[0];
+    sim_pose_msg.pose.pose.orientation.x = msg->quat[1];
+    sim_pose_msg.pose.pose.orientation.y = msg->quat[2];
+    sim_pose_msg.pose.pose.orientation.z = msg->quat[3];
 
     
     sim_contact_publisher_.publish(contact_msg);
@@ -182,6 +182,23 @@ namespace cheetah_inekf_ros {
     
   }
 
+  template <unsigned int ENCODER_DIM>
+  void InEKF_lcm<ENCODER_DIM>::inekf_state_ros_callback(const inekf_msgs::State::ConstPtr &msg){
+    inekf_lcm_mutex_.lock();
+    inekf_lcm_.x[0] = msg->position.x; 
+    inekf_lcm_.x[1] = msg->position.y; 
+    inekf_lcm_.x[2] = msg->position.z; 
+    inekf_lcm_.quat[0] = msg->orientation.w;
+    inekf_lcm_.quat[1] = msg->orientation.x;
+    inekf_lcm_.quat[2] = msg->orientation.y;
+    inekf_lcm_.quat[3] = msg->orientation.z;
+    inekf_lcm_mutex_.unlock();
+  }
+
+  // template <unsigned int ENCODER_DIM>
+  // void InEKF_lcm<ENCODER_DIM>::inekf_kinematics_ros_callback(const inekf_msgs::KinematicsArray::ConstPtr &msg){
+
+  // }
 
 
 } // mini_cheetah

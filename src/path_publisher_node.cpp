@@ -64,7 +64,7 @@ class PathPublisherNode {
             poses_.push_back(pose);
         }
 
-  void poseStampedCallback(const geometry_msgs::PoseStamped::ConstPtr& msg){
+        void poseStampedCallback(const geometry_msgs::PoseStamped::ConstPtr& msg){
             // if ((int)msg->header.seq%pose_skip_!=0) { return; }
             geometry_msgs::PoseStamped pose;
             pose.header = msg->header;

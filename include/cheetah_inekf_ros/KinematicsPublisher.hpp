@@ -16,6 +16,7 @@
 #include "kin/Jb_Body_to_HindLeftFoot.h"
 #include "kin/Jb_Body_to_HindRightFoot.h"
 
+#include <lcm/lcm-cpp.hpp>
 
 namespace cheetah_inekf_ros {
   template <unsigned int ENCODER_DIM>

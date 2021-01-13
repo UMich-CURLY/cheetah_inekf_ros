@@ -2,8 +2,10 @@
   <arg name="cheetah_namespace" default="cheetah" />
 
 
-  <node name="sim_publisher_node" pkg="cheetah_inekf_ros" type="sim_publisher_node" >
-    <param name="is_listening_sim" value="true" />
+  <node name="sim_publisher_node" pkg="cheetah_inekf_ros" type="sim_publisher_node" output="screen" >
+        <param name="is_listening_sim" value="true" />
+        <param name="is_publishing_lcm" value="true" />
+        <param name="publish_rate" value="100"/>
         <param name="joint_state_lcm_topic" value="leg_control_data"/>
         <param name="sim_lcm_topic" value="simulator_state"/>
         <param name="imu_lcm_topic" value="microstrain"/>
