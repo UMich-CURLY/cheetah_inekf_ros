@@ -23,8 +23,8 @@ class PosePublisherNode{
             nh.param<std::string>("pose_frame", pose_frame, "/odom");
             nh.param<std::string>("pose_csv_file", pose_csv_file, "/data/ground_truth.csv");
             nh.param<std::string>("init_rot_file", init_rot_file, "/data/init_rot_file.csv");
-            nh.param<double>("publish_rate", publish_rate_, 1); 
-            nh.param<int>("pose_skip", pose_skip_, 1); 
+            nh.param<double>("publish_rate", publish_rate_, 1000); 
+            nh.param<int>("pose_skip", pose_skip_, 1000); 
             
             // load poses from csv files
 
