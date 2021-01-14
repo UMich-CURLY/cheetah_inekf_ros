@@ -4,7 +4,7 @@
 ```
 ros
 invariant-ekf/devel
-InEKF-ros
+invariant-ekf-new
 Eigen3
 lcm 1.4.0
 Boost
