@@ -6,6 +6,8 @@ Panels:
       Expanded:
         - /Global Options1
         - /Status1
+        - /TF1
+        - /TF1/Frames1
       Splitter Ratio: 0.5
     Tree Height: 730
   - Class: rviz/Selection
@@ -93,6 +95,26 @@ Visualization Manager:
       Topic: /cheetah/pose
       Unreliable: false
       Value: true
+    - Class: rviz/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: false
+        cheetah/imu:
+          Value: true
+        odom:
+          Value: false
+      Marker Scale: 1
+      Name: TF
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      Tree:
+        odom:
+          cheetah/imu:
+            {}
+      Update Interval: 0
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -121,7 +143,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 6.687999725341797
+      Distance: 2.486051082611084
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -136,10 +158,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.3303983211517334
+      Pitch: 0.4953983724117279
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.5803961753845215
+      Yaw: 3.1403963565826416
     Saved: ~
 Window Geometry:
   Displays:
@@ -157,5 +179,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1920
-  X: 98
-  Y: 40
+  X: 0
+  Y: 0

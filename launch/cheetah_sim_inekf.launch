@@ -10,9 +10,9 @@
         <param name="sim_lcm_topic" value="simulator_state"/>
         <param name="imu_lcm_topic" value="microstrain"/>
         <param name="sim_contact_force_threshold" value="40.0"/>
-        <param name="encoder_std" value="0.05"/>
-        <param name="kinematic_prior_orientation_std" value="0.01"/>
-        <param name="kinematic_prior_position_std" value="0.01"/>
+        <param name="encoder_std" value="0.000001"/>
+        <param name="kinematic_prior_orientation_std" value="0.03"/>
+        <param name="kinematic_prior_position_std" value="0.03"/>
     </node>
 
       <!-- Run Invariant EKF -->
