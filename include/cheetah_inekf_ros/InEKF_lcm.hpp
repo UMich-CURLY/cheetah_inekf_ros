@@ -11,6 +11,8 @@
 #include "inekf_msgs/ContactArray.h"
 #include "inekf_msgs/KinematicsArray.h"
 #include "inekf_msgs/State.h"
+#include <message_filters/synchronizer.h>
+#include <message_filters/sync_policies/approximate_time.h>
 #include "geometry_msgs/PoseStamped.h"
 #include "geometry_msgs/PoseWithCovarianceStamped.h"
 #include "KinematicsPublisher.hpp"
@@ -37,6 +39,7 @@ class InEKF_lcm {
       seq_imu_data_ = 0;
       seq_joint_state_ = 0;
       seq_contact_ = 0;
+      seq_sim_ = 0;
       nh_.param<double>("publish_rate", publish_rate_, 100000); 
       std::string joint_state_lcm_topic, imu_lcm_topic, contact_lcm_topic,  imu_frame_id, sim_lcm_topic ;
       nh_.param<std::string>("joint_state_lcm_topic", joint_state_lcm_topic, "joint_state_lcm");

@@ -18,6 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   inekf_msgs
   geometry_msgs
+  message_filters
   #apriltag_msgs
   tf
 )
