@@ -9,9 +9,9 @@
         <param name="is_listening_sim" value="false" />
         <param name="is_publishing_lcm" value="false" />
     
-        <param name="joint_state_lcm_topic" value="joint_states"/>
-        <param name="contact_topic" value="contact"/>
-        <param name="imu_lcm_topic" value="imu"/>
+        <param name="joint_state_lcm_topic" value="leg_control_data"/>
+        <param name="contact_topic" value="ground_truth"/>
+        <param name="imu_lcm_topic" value="microstrain"/>
         <param name="encoder_std" value="0.0174533"/>
         <param name="kinematic_prior_orientation_std" value="0.03"/>
         <param name="kinematic_prior_position_std" value="0.03"/>
@@ -29,13 +29,13 @@
 <node name="path_publisher" pkg="cheetah_inekf_ros" type="path_publisher_node" output="screen">
         <param name="pose_topic" value="/cheetah/pose"/>
         <param name="path_topic" value="/cheetah/path"/>
-        <param name="file_name" value="inekf.csv"/>
+        <param name="file_name" value="/media/curly_ssd_justin/code/minicheetah-perception/catkin_ws/src/cheetah_inekf_ros/data/inekf_contact_estimation_no_torque_no_GRF.csv"/>
         <param name="publish_rate" value="1"/>
         <param name="pose_skip" value="100"/>
     </node> 
 
 <!-- Play ground truth-->
-     <node name="groundtruth_pose_publisher" pkg="cheetah_inekf_ros" type="pose_publisher_node">
+     <!-- <node name="groundtruth_pose_publisher" pkg="cheetah_inekf_ros" type="pose_publisher_node">
       <param name="pose_topic" value="/cheetah/groundtruth/pose"/>
       <param name="pose_frame" value="/odom"/>
       <param name="pose_csv_file" value="$(find cheetah_inekf_ros)/data/08292020_trial1_groundtruth.csv"/>
@@ -49,7 +49,7 @@
       <param name="file_name" value="ground_truth.csv"/>
       <param name="publish_rate" value="1"/>
       <param name="pose_skip" value="100"/>
-    </node> 
+    </node>  -->
 
 
 </launch>

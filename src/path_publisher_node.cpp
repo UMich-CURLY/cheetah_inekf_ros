@@ -74,9 +74,12 @@ class PathPublisherNode {
             std::lock_guard<std::mutex> lock(poses_mutex_);
 
             if (file_name_.size() > 0) {
-		    ROS_INFO_STREAM("write new pose\n");
+		      ROS_INFO_STREAM("write new pose\n");
               std::ofstream outfile(file_name_,std::ofstream::out | std::ofstream::app );
-              outfile << "1 0 0 "<< pose.pose.position.x<<" 0 1 0 "<<pose.pose.position.y<<" 0 0 1 "<<pose.pose.position.z<<std::endl<<std::flush;
+            //   outfile << "1 0 0 "<< pose.pose.position.x<<" 0 1 0 "<<pose.pose.position.y<<" 0 0 1 "<<pose.pose.position.z<<std::endl<<std::flush;
+              // tum style
+              outfile << pose.header.stamp << " "<< pose.pose.position.x<<" "<< pose.pose.position.y << " "<<pose.pose.position.z << " "<<pose.pose.orientation.x\
+              <<" "<< pose.pose.orientation.y <<" "<< pose.pose.orientation.z <<" "<< pose.pose.orientation.w <<std::endl<<std::flush;
               outfile.close();
             }
             
@@ -90,11 +93,12 @@ class PathPublisherNode {
             pose.pose = msg->pose;
             std::cout<<"publishing: "<<pose.pose.position.x<<", "<<pose.pose.position.y<<", "<<pose.pose.position.z<<std::endl;
             std::lock_guard<std::mutex> lock(poses_mutex_);
-            if (file_name_.size() > 0) {
-              std::ofstream outfile(file_name_,std::ofstream::out | std::ofstream::app );
-              outfile << "1 0 0 "<< pose.pose.position.x<<" 0 1 0 "<<pose.pose.position.y<<" 0 0 1 "<<pose.pose.position.z<<std::endl<<std::flush;
-              outfile.close();
-            }
+
+            // if (file_name_.size() > 0) {
+            //   std::ofstream outfile(file_name_,std::ofstream::out | std::ofstream::app );
+            //   outfile << "1 0 0 "<< pose.pose.position.x<<" 0 1 0 "<<pose.pose.position.y<<" 0 0 1 "<<pose.pose.position.z<<std::endl<<std::flush;
+            //   outfile.close();
+            // }
             
             poses_.push_back(pose);
         }
@@ -109,8 +113,6 @@ class PathPublisherNode {
             path_msg.header.frame_id = pose_frame_;
             path_msg.poses = poses_;
             // std::cout<<"current pose: "<<path_msg.poses.back().pose.position.x<<", "<<path_msg.poses.back().pose.position.y<<", "<<path_msg.poses.back().pose.position.z<<std::endl;
-            
-            
             
             path_pub_.publish(path_msg);
             seq_++;

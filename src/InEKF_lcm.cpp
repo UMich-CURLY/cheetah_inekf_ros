@@ -40,6 +40,7 @@ namespace cheetah_inekf_ros {
     std::vector<double> joint_position(msg->q.begin(), msg->q.end() );
     std::vector<double> joint_velocity(msg->qd.begin(), msg->qd.end() );
     std::vector<double> joint_effort(msg->tau_est.begin(), msg->tau_est.end() );
+    
     Eigen::Matrix<double, ENCODER_DIM, 1> encoder_pos;
     for (int j = 0; j < ENCODER_DIM; j++)
       encoder_pos(j) = joint_position[j];
@@ -92,12 +93,18 @@ namespace cheetah_inekf_ros {
     joint_state_msg.header.seq = seq_joint_state_;
     joint_state_msg.header.stamp = ros::Time::now();
     //joint_state_msg.header.frame_id = "/cheetah/joint_state";
-    std::vector<double> joint_position(ENCODER_DIM);
-    std::copy(msg->q, msg->q+ENCODER_DIM, joint_position.begin()  );
-    std::vector<double> joint_velocity(ENCODER_DIM);
-    std::copy(msg->qd, msg->qd+ENCODER_DIM, joint_velocity.begin() );
-    std::vector<double> joint_effort(ENCODER_DIM);
-    std::copy(msg->tau_est, msg->tau_est+ ENCODER_DIM, joint_effort.begin() );
+    // std::vector<double> joint_position(ENCODER_DIM);
+    // std::copy(msg->q, msg->q+ENCODER_DIM, joint_position.begin()  );
+    // std::vector<double> joint_velocity(ENCODER_DIM);
+    // std::copy(msg->qd, msg->qd+ENCODER_DIM, joint_velocity.begin() );
+    // std::vector<double> joint_effort(ENCODER_DIM);
+    // std::copy(msg->tau_est, msg->tau_est+ ENCODER_DIM, joint_effort.begin() );
+    // Eigen::Matrix<double, ENCODER_DIM, 1> encoder_pos;
+
+    std::vector<double> joint_position(msg->q, msg->q+ENCODER_DIM);
+    std::vector<double> joint_velocity(msg->qd, msg->qd+ENCODER_DIM);
+    std::vector<double> joint_effort(msg->tau_est, msg->tau_est+ ENCODER_DIM);
+
     Eigen::Matrix<double, ENCODER_DIM, 1> encoder_pos;
     for (int j = 0; j < ENCODER_DIM; j++)
       encoder_pos(j) = joint_position[j];

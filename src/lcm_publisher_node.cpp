@@ -22,9 +22,9 @@ int main(int argc, char **argv) {
   // cheetah has 12 degrees of freedom
   cheetah_inekf_ros::InEKF_lcm<12> lcm_publisher_node;
   
-  lcm.subscribe("microstrain", &cheetah_inekf_ros::InEKF_lcm<12>::imu_lcm_callback2, &lcm_publisher_node);
-  lcm.subscribe("leg_control_data", &cheetah_inekf_ros::InEKF_lcm<12>::joint_state_lcm_callback2, &lcm_publisher_node);
-  lcm.subscribe("ground_truth", &cheetah_inekf_ros::InEKF_lcm<12>::contact_lcm_callback, &lcm_publisher_node);
+  lcm.subscribe("microstrain", &cheetah_inekf_ros::InEKF_lcm<12>::imu_lcm_callback, &lcm_publisher_node);
+  lcm.subscribe("leg_control_data", &cheetah_inekf_ros::InEKF_lcm<12>::joint_state_lcm_callback, &lcm_publisher_node);
+  lcm.subscribe("contact", &cheetah_inekf_ros::InEKF_lcm<12>::contact_lcm_callback, &lcm_publisher_node);
   
   ROS_DEBUG_STREAM("start spinning...");  
   int lcm_timeout = 100; //ms
