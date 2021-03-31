@@ -76,11 +76,11 @@ class PathPublisherNode {
             if (file_name_.size() > 0) {
 		      ROS_INFO_STREAM("write new pose\n");
               std::ofstream outfile(file_name_,std::ofstream::out | std::ofstream::app );
-            //   outfile << "1 0 0 "<< pose.pose.position.x<<" 0 1 0 "<<pose.pose.position.y<<" 0 0 1 "<<pose.pose.position.z<<std::endl<<std::flush;
-              // tum style
-              outfile << pose.header.stamp << " "<< pose.pose.position.x<<" "<< pose.pose.position.y << " "<<pose.pose.position.z << " "<<pose.pose.orientation.x\
-              <<" "<< pose.pose.orientation.y <<" "<< pose.pose.orientation.z <<" "<< pose.pose.orientation.w <<std::endl<<std::flush;
-              outfile.close();
+              outfile << "1 0 0 "<< pose.pose.position.x<<" 0 1 0 "<<pose.pose.position.y<<" 0 0 1 "<<pose.pose.position.z<<std::endl<<std::flush;
+            //   tum style
+            //   outfile << pose.header.stamp << " "<< pose.pose.position.x<<" "<< pose.pose.position.y << " "<<pose.pose.position.z << " "<<pose.pose.orientation.x\
+            //   <<" "<< pose.pose.orientation.y <<" "<< pose.pose.orientation.z <<" "<< pose.pose.orientation.w <<std::endl<<std::flush;
+            //   outfile.close();
             }
             
             poses_.push_back(pose);
