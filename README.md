@@ -1,5 +1,6 @@
 # cheetah_inekf_ros
-This repository contains a ROS package that subscribe to LCM messages, compute forward kinmatics for an MIT mini cheetah, and publish the kinematics, imu, and cotnact information to ROS.
+This repository contains a ROS package that subscribe to LCM messages, compute forward kinmatics for an MIT mini cheetah, and publish the kinematics, imu, and cotnact information to ROS.\
+We provide a launch file `cheetah_lcm_inekf.launch` to run the invariant EKF for mini cheetah. (With LCM messages as input.)
 
 ## Dependencies
 * ROS
@@ -46,7 +47,7 @@ catkin_make -DCMAKE_BUILD_TYPE=Release -DCATKIN_ENABLE_TESTING=False
 ```
 
 ## Run invariant EKF with LCM
-* `launch/cheetah_lcm_inekf.launch` is a launch file to start the invariant EKF with LCM messages. The trajectory will be saved in both [kitti](https://github.com/MichaelGrupp/evo/wiki/Formats#kitti---kitti-dataset-pose-format) and [tum](https://github.com/MichaelGrupp/evo/wiki/Formats#tum---tum-rgb-d-dataset-trajectory-format) format. The save path can be modified in [line 32](https://github.com/UMich-CURLY/cheetah_inekf_ros/blob/main/launch/cheetah_lcm_inekf.launch#L32) and [line 33](https://github.com/UMich-CURLY/cheetah_inekf_ros/blob/main/launch/cheetah_lcm_inekf.launch#L33) of the lunch file.
+* `launch/cheetah_lcm_inekf.launch` is a launch file to start the invariant EKF with LCM messages. This launch file calls invariant-ekf-ros and run the filter automatically. The trajectory will be saved in both [kitti](https://github.com/MichaelGrupp/evo/wiki/Formats#kitti---kitti-dataset-pose-format) and [tum](https://github.com/MichaelGrupp/evo/wiki/Formats#tum---tum-rgb-d-dataset-trajectory-format) format. The save path can be modified in [line 32](https://github.com/UMich-CURLY/cheetah_inekf_ros/blob/main/launch/cheetah_lcm_inekf.launch#L32) and [line 33](https://github.com/UMich-CURLY/cheetah_inekf_ros/blob/main/launch/cheetah_lcm_inekf.launch#L33) of the lunch file.
 
 * To run the code, run:
 ```
