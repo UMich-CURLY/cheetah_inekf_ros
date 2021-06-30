@@ -8,6 +8,7 @@ add_compile_options(-O3)
 # add_compile_options(-march=native)
 #set(CMAKE_CXX_STANDARD 11)
 
+SET(CMAKE_MODULE_PATH ${${PROJECT_NAME}_SOURCE_DIR}/cmake)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -49,6 +50,7 @@ if (LCM_FOUND)
     include_directories(${LCM_INCLUDE_DIRS})
     # add_subdirectory(src)
 endif (LCM_FOUND)
+message("LCM_INCLUDE_DIR: " ${LCM_INCLUDE_DIRS})
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures

@@ -29,7 +29,8 @@
 <node name="path_publisher" pkg="cheetah_inekf_ros" type="path_publisher_node" output="screen">
         <param name="pose_topic" value="/cheetah/pose"/>
         <param name="path_topic" value="/cheetah/path"/>
-        <param name="file_name" value="/media/curly_ssd_justin/code/minicheetah-perception/catkin_ws/src/cheetah_inekf_ros/data/test_new.csv"/>
+        <param name="file_name" value="/media/curly_ssd_justin/code/minicheetah-perception/catkin_ws/src/cheetah_inekf_ros/data/lcmlog-2021-06-05_09_network_data_short.csv"/>
+        <param name="tum_file_name" value="/media/curly_ssd_justin/code/minicheetah-perception/catkin_ws/src/cheetah_inekf_ros/data/lcmlog-2021-06-05_09_network_data_short_tum.csv"/>
         <param name="publish_rate" value="1"/>
         <param name="pose_skip" value="100"/>
     </node> 

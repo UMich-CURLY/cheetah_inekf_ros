@@ -30,7 +30,8 @@ class PathPublisherNode {
             std::string pose_topic, path_topic;
             nh.param<std::string>("pose_topic", pose_topic, "/cassie/pose");
             nh.param<std::string>("path_topic", path_topic, "/cassie/path");
-            nh.param<std::string>("file_name", file_name_, std::string(""));
+            nh.param<std::string>("file_name", file_name_, std::string("inekf_pose_kitti.txt"));
+            nh.param<std::string>("tum_file_name",tum_file_name_, std::string("inekf_pose_tum.txt"));
             nh.param<double>("publish_rate", publish_rate_, 1); 
             nh.param<int>("pose_skip", pose_skip_, 1); 
             // Find pose frame from first message
@@ -43,7 +44,9 @@ class PathPublisherNode {
 
             if (file_name_.size() > 1){
               std::ofstream outfile(file_name_);
+              std::ofstream tum_outfile(tum_file_name_);
               ROS_INFO_STREAM("write traj to file "<<file_name_);
+          tum_outfile.close();
 	      outfile.close();
             }
             
@@ -55,7 +58,8 @@ class PathPublisherNode {
         ros::Subscriber pose_sub_;
         ros::Publisher path_pub_;
         std::string pose_frame_;
-  std::string file_name_;
+        std::string file_name_;
+        std::string tum_file_name_;
         uint32_t seq_ = 0;
         double publish_rate_;
         int pose_skip_;
@@ -77,10 +81,13 @@ class PathPublisherNode {
 		      ROS_INFO_STREAM("write new pose\n");
               std::ofstream outfile(file_name_,std::ofstream::out | std::ofstream::app );
               outfile << "1 0 0 "<< pose.pose.position.x<<" 0 1 0 "<<pose.pose.position.y<<" 0 0 1 "<<pose.pose.position.z<<std::endl<<std::flush;
-            //   tum style
-            //   outfile << pose.header.stamp << " "<< pose.pose.position.x<<" "<< pose.pose.position.y << " "<<pose.pose.position.z << " "<<pose.pose.orientation.x\
-            //   <<" "<< pose.pose.orientation.y <<" "<< pose.pose.orientation.z <<" "<< pose.pose.orientation.w <<std::endl<<std::flush;
-            //   outfile.close();
+              outfile.close();
+              // tum style
+              std::ofstream tum_outfile(tum_file_name_,std::ofstream::out | std::ofstream::app );
+              tum_outfile << pose.header.stamp << " "<< pose.pose.position.x<<" "<< pose.pose.position.y << " "<<pose.pose.position.z << " "<<pose.pose.orientation.x\
+              <<" "<< pose.pose.orientation.y <<" "<< pose.pose.orientation.z <<" "<< pose.pose.orientation.w <<std::endl<<std::flush;
+              
+              tum_outfile.close();
             }
             
             poses_.push_back(pose);
