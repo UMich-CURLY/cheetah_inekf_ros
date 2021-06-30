@@ -14,5 +14,6 @@
       <param name="path_topic" value="/cheetah/groundtruth/path"/>
       <param name="publish_rate" value="100"/>
       <param name="pose_skip" value="0"/>
+      <param name="file_name" value="/media/curly_ssd_justin/code/minicheetah-perception/catkin_ws/src/cheetah_inekf_ros/data/08292020_trail1_gt_2.txt"/>
     </node>
 </launch>

@@ -6,6 +6,9 @@
 #include "inekf_msgs/KinematicsArray.h"
 #include "sensor_msgs/JointState.h"
 
+#include <iostream>
+#include <fstream>
+
 // forward kinematics from FROST
 #include "kin/H_Body_to_FrontLeftFoot.h"
 #include "kin/H_Body_to_FrontRightFoot.h"
@@ -16,6 +19,7 @@
 #include "kin/Jb_Body_to_HindLeftFoot.h"
 #include "kin/Jb_Body_to_HindRightFoot.h"
 
+#include <lcm/lcm-cpp.hpp>
 
 namespace cheetah_inekf_ros {
   template <unsigned int ENCODER_DIM>
@@ -40,6 +44,11 @@ namespace cheetah_inekf_ros {
       cov_prior_ = Eigen::Matrix<double,6,6>::Identity();
       cov_prior_.block<3,3>(0,0) = kinematic_prior_orientation_std*kinematic_prior_orientation_std*Eigen::Matrix<double,3,3>::Identity();
       cov_prior_.block<3,3>(3,3) = kinematic_prior_position_std*kinematic_prior_position_std*Eigen::Matrix<double,3,3>::Identity();
+      
+      
+    }
+
+    ~KinematicsPublisher(){
       
     }
 
@@ -135,8 +144,17 @@ namespace cheetah_inekf_ros {
       kinematics_msg.frames.push_back(front_left_foot);
       kinematics_msg.frames.push_back(hind_right_foot);
       kinematics_msg.frames.push_back(hind_left_foot);
-      //kinematic_pub_.publish(kinematics_msg);
+      // kinematic_pub_.publish(kinematics_msg);
 
+      // std::ofstream fLogCSV;
+      // fLogCSV.open("/media/curly_ssd_justin/code/minicheetah-perception/fk_log.csv", std::ios::app);
+      // fLogCSV<<front_right_foot.pose.pose.position.x<<","<<front_right_foot.pose.pose.position.y<<","<<front_right_foot.pose.pose.position.z<<","\
+      // <<front_left_foot.pose.pose.position.x<<","<<front_left_foot.pose.pose.position.y<<","<<front_left_foot.pose.pose.position.z<<","\
+      // <<hind_right_foot.pose.pose.position.x<<","<<hind_right_foot.pose.pose.position.y<<","<<hind_right_foot.pose.pose.position.z<<","\
+      // <<hind_left_foot.pose.pose.position.x<<","<<hind_left_foot.pose.pose.position.y<<","<<hind_left_foot.pose.pose.position.z<<"\n";
+      // fLogCSV.flush();
+      // fLogCSV.close();
+      
       return kinematics_msg;
       
     }
@@ -149,6 +167,8 @@ namespace cheetah_inekf_ros {
     ros::Subscriber joint_state_sub_;
     ros::Publisher kinematic_pub_;
 
+
+    
     std::string imu_frame_id_;
     //const unsigned int encoder_dim_;
     Eigen::Matrix<double,ENCODER_DIM,ENCODER_DIM> cov_encoders_;
@@ -163,6 +183,7 @@ namespace cheetah_inekf_ros {
       }
       auto kinematics_msg =  callback_handler(header, encoders, cov_encoders_, cov_prior_);
       kinematic_pub_.publish(kinematics_msg);
+
     }
     
   }; 

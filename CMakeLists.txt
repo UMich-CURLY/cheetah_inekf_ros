@@ -3,11 +3,12 @@ project(cheetah_inekf_ros)
 add_compile_options(-std=c++11)
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
-# add_compile_options(-O3)
+add_compile_options(-O3)
 # add_compile_options(-DEIGEN_NO_DEBUG)
 # add_compile_options(-march=native)
 #set(CMAKE_CXX_STANDARD 11)
 
+SET(CMAKE_MODULE_PATH ${${PROJECT_NAME}_SOURCE_DIR}/cmake)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -18,6 +19,7 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   inekf_msgs
   geometry_msgs
+  message_filters
   #apriltag_msgs
   tf
 )
@@ -48,6 +50,7 @@ if (LCM_FOUND)
     include_directories(${LCM_INCLUDE_DIRS})
     # add_subdirectory(src)
 endif (LCM_FOUND)
+message("LCM_INCLUDE_DIR: " ${LCM_INCLUDE_DIRS})
 
 
 ## Uncomment this if the package has a setup.py. This macro ensures
@@ -138,7 +141,7 @@ endif (LCM_FOUND)
 catkin_package(
    INCLUDE_DIRS include
 #  LIBRARIES invariant-ekf-ros
-   CATKIN_DEPENDS std_msgs sensor_msgs inekf_msgs tf
+   CATKIN_DEPENDS std_msgs sensor_msgs inekf_msgs tf geometry_msgs
 #  DEPENDS system_lib
 )
 
@@ -204,6 +207,17 @@ target_link_libraries(lcm_publisher_node
     cheetah_kinematics
     cheetah_lcm
 )
+
+
+add_executable(sim_publisher_node src/sim_publisher_node.cpp )
+target_link_libraries(sim_publisher_node
+    ${catkin_LIBRARIES}
+    ${inekf_LIBRARIES}
+    ${Boost_LIBRARIES}
+    cheetah_kinematics
+    cheetah_lcm
+)
+
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
